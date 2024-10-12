@@ -24,12 +24,7 @@ def decrypt(encrypted, key):
 def Sort(scores):
     scores.sort(key = lambda x: x[1])
     return scores
- 
-# Input list 
-sub_li =[['rishav', 10], ['akash', 5], ['ram', 20], ['gaurav', 15]]
- 
-# Printing the sub list
-print(Sort(sub_li))
+
 #Set up the first word before the loop
 #Initialize score and hearts
 score=0
