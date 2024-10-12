@@ -2,7 +2,34 @@
 import os
 # This is used to generate a random number from 1 to 1296, to get a random word
 from random import randrange
+#This is used to create a 5 character random string to add to the beginning of the scores line before encryption
+from random import choices
+import string
 
+def encrypt(scoreline, key):
+    #5-character random string added to the beginning to make it hard to find the key
+    prepend=''.join(choices(string.ascii_letters, k=5))
+    scoreline=prepend+scoreline
+    encrypted=""
+    for i in range(len(scoreline)):
+        encrypted+=chr((ord(scoreline[i])+ord(key[i]))%126)
+    return encrypted
+
+def decrypt(encrypted, key):
+    scoreline=""
+    for i in range(len(encrypted)):
+        scoreline+=chr((ord(encrypted[i])-ord(key[i]))%126)
+    return scoreline[5:]
+
+def Sort(scores):
+    scores.sort(key = lambda x: x[1])
+    return scores
+ 
+# Input list 
+sub_li =[['rishav', 10], ['akash', 5], ['ram', 20], ['gaurav', 15]]
+ 
+# Printing the sub list
+print(Sort(sub_li))
 #Set up the first word before the loop
 #Initialize score and hearts
 score=0
@@ -98,5 +125,38 @@ while True:
             break
 os.system('cls')
 print("============== V O C A R D I O ==============\n\n"+message+"\n")
-print("Words Completed: "+str(wordsdone)+"     Score: "+str(score))
-print("\nThank you for playing Vocardio!")
+print("Words Completed: "+str(wordsdone)+"     Score: "+str(score)+"\n")
+print("Thank you for playing Vocardio!")
+key="KUKJDHKJHDGKJHEWFIYFTGIWUIPOIXKZLKFLNHFRGUFIUEOHDSLKJBNSXKBJNX"
+file=open("localhs.txt","r")
+content=file.readlines()
+file.close()
+highscores=[]
+for line in content:
+    deline=decrypt(line[:-1], key)
+    scoreline=deline.split(" ")
+    highscores.append([scoreline[0], int(scoreline[1])])
+savehs="N"
+if len(highscores)==0:
+    savehs=input("You have a high score! Would you like to save it? (Y/N):")
+else:
+    if highscores[len(highscores)-1][1]<score:
+        savehs=input("\nYou have a high score! Would you like to save it? (Y/N):")
+savehs=savehs.upper()
+if savehs=='Y':
+    name=input("Enter your name or nickname (max 10 char):")
+    highscores.append([name[:10], score])
+    codeforup=encrypt(name[:10]+ " "+str(score),key)
+    print("-----------NEW HIGH SCORES------------")
+    highscores = Sort(highscores)
+    file=open("localhs.txt","w")
+    for i in range(len(highscores)):
+        file.write(encrypt(highscores[i][0]+" "+str(highscores[i][1]),key)+"\n")
+        print(highscores[i][0]+" "*(15-len(highscores[i][0]))+str(highscores[i][1]))
+        if i==9: break
+    file.close()
+    print("Use this code to submit your high score online: "+codeforup)
+    file.close()
+    
+    
+
