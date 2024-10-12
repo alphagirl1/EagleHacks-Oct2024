@@ -137,8 +137,9 @@ for line in content:
     scoreline=deline.split(" ")
     highscores.append([scoreline[0], int(scoreline[1])])
 savehs="N"
-if len(highscores)==0:
-    savehs=input("You have a high score! Would you like to save it? (Y/N):")
+if len(highscores)==0 or len(highscores)<10:
+    if score>0:
+        savehs=input("You have a high score! Would you like to save it? (Y/N):")
 else:
     if highscores[len(highscores)-1][1]<score:
         savehs=input("\nYou have a high score! Would you like to save it? (Y/N):")
@@ -147,7 +148,7 @@ if savehs=='Y':
     name=input("Enter your name or nickname (max 10 char):")
     highscores.append([name[:10], score])
     codeforup=encrypt(name[:10]+ " "+str(score),key)
-    print("-----------NEW HIGH SCORES------------")
+    print("\n-----------NEW HIGH SCORES------------")
     highscores = Sort(highscores)
     file=open("localhs.txt","w")
     for i in range(len(highscores)):
@@ -157,6 +158,10 @@ if savehs=='Y':
     file.close()
     print("Use this code to submit your high score online: "+codeforup)
     file.close()
+else:
+    print("\n-----------HIGH SCORES------------")
+    for i in range(len(highscores)):
+        print(highscores[i][0]+" "*(15-len(highscores[i][0]))+str(highscores[i][1]))
     
     
 
