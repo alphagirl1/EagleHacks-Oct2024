@@ -12,13 +12,17 @@ def encrypt(scoreline, key):
     scoreline=prepend+scoreline
     encrypted=""
     for i in range(len(scoreline)):
-        encrypted+=chr((ord(scoreline[i])+ord(key[i]))%126)
+        enccode=ord(scoreline[i])+(ord(key[i]))-64
+        if enccode>122: enccode-=91
+        encrypted+=chr(enccode)
     return encrypted
 
 def decrypt(encrypted, key):
     scoreline=""
     for i in range(len(encrypted)):
-        scoreline+=chr((ord(encrypted[i])-ord(key[i]))%126)
+        deccode=ord(encrypted[i])-(ord(key[i]))+64
+        if deccode<32: deccode+=91
+        scoreline+=chr(deccode)
     return scoreline[5:]
 
 def Sort(scores):
@@ -141,6 +145,7 @@ else:
 savehs=savehs.upper()
 if savehs=='Y':
     name=input("Enter your name or nickname (max 10 char):")
+    name=''.join(char for char in name if char.isalnum())
     highscores.append([name[:10], score])
     codeforup=encrypt(name[:10]+ " "+str(score),key)
     print("\n-----------NEW HIGH SCORES------------")
