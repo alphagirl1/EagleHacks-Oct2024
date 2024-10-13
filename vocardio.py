@@ -70,7 +70,7 @@ while True:
     guess=guess.upper()
     if guess=="": continue
     if guess=="QUIT":
-        message="You quit the game"
+        message="You quit the game./n           ---GAME OVER---"
         break    
     guess=guess[0] #Taking the first charcter in case multiple where entered
     if guess in guesses:
@@ -120,7 +120,7 @@ while True:
         message="No, it does not contain "+guess
         hearts-=1
         if hearts==0:
-            message="You ran out of hearts! GAME OVER"
+            message="You ran out of hearts! The word was "+currword+"./n           ---GAME OVER---"
             break
 os.system('cls')
 print("============== V O C A R D I O ==============\n\n"+message+"\n")
