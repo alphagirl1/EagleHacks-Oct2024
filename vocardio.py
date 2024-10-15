@@ -26,7 +26,7 @@ def decrypt(encrypted, key):
     return scoreline[5:]
 
 def Sort(scores):
-    scores.sort(key = lambda x: x[1])
+    scores.sort(reverse = True, key = lambda x: x[1])
     return scores
 
 #Set up the first word before the loop
@@ -140,7 +140,7 @@ if len(highscores)==0 or len(highscores)<10:
     if score>0:
         savehs=input("You have a high score! Would you like to save it? (Y/N):")
 else:
-    if highscores[0][1]<score:
+    if highscores[9][1]<score:
         savehs=input("\nYou have a high score! Would you like to save it? (Y/N):")
 savehs=savehs.upper()
 if savehs=='Y':
