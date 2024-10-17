@@ -153,6 +153,8 @@ if savehs=='Y':
     file=open("localhs.txt","w")
     for i in range(len(highscores)):
         file.write(encrypt(highscores[i][0]+" "+str(highscores[i][1]),key)+"\n")
+        if i<9: print(" "+str(i+1)+". ", end="")
+        else: print(str(i+1)+". ", end="")
         print(highscores[i][0]+" "*(15-len(highscores[i][0]))+str(highscores[i][1]))
         if i==9: break
     file.close()
@@ -161,6 +163,8 @@ if savehs=='Y':
 else:
     print("\n-----------HIGH SCORES------------")
     for i in range(len(highscores)):
+        if i<9: print(" "+str(i+1)+". ", end="")
+        else: print(str(i+1)+". ", end="")
         print(highscores[i][0]+" "*(15-len(highscores[i][0]))+str(highscores[i][1]))
     
     
